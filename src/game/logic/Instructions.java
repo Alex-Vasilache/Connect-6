@@ -10,7 +10,17 @@ public class Instructions {
         if (Errors.start(input)) {
             throw new InvalidInputException();
         } else {
-            while (Game.end == false) {
+
+            if (input[0].equals("standard")) {
+                Game.setStandard(true);
+            } else {
+                Game.setStandard(false);
+            }
+            Game.setSize(input[1]);
+            Game.setPlayers(input[2]);
+            Game.setBoard(new int[Game.getSize()][Game.getSize()]);
+
+            while (Game.isEnd() == false) {
 
                 Game.splitter(Terminal.readLine());
 
@@ -22,7 +32,13 @@ public class Instructions {
         if (Errors.place(input)) {
             throw new InvalidInputException();
         } else {
-            // TODO Method
+            String[] numbers = input.split(";");
+            int row1 = Integer.parseInt(numbers[0]);
+            int col1 = Integer.parseInt(numbers[1]);
+            int row2 = Integer.parseInt(numbers[2]);
+            int col2 = Integer.parseInt(numbers[3]);
+            Game.place(row1, col1, Game.getTurn() % Game.getPlayers() + 1);
+            Game.place(row2, col2, Game.getTurn() % Game.getPlayers() + 1);
         }
     }
 

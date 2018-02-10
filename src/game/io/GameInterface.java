@@ -1,8 +1,7 @@
 package game.io;
 
-import edu.kit.informatik.*;
+import edu.kit.informatik.Terminal;
 import game.errors.InvalidInputException;
-import game.logic.Game;
 import game.logic.Instructions;
 
 public class GameInterface {
@@ -16,8 +15,7 @@ public class GameInterface {
         try {
             Instructions.start(args);
         } catch (InvalidInputException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            Terminal.printError("Invalid inputs!");
         }
     }
 }
