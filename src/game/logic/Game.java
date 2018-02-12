@@ -12,6 +12,7 @@ public class Game {
     private static int size;
     private static int players;
     private static int[][] board;
+    private static boolean canPlace = true;
 
     public static void splitter(String input) {
 
@@ -22,10 +23,17 @@ public class Game {
 
             try {
                 Instructions.place(parts[1]);
+                if (Winner.check() == false) {
+                    Terminal.printLine("OK");
+                }
                 setTurn((getTurn() + 1));
-                Terminal.printLine("OK");
+
             } catch (InvalidInputException e) {
-                Terminal.printError("Invalid Inputs");
+                if (Game.canPlace == false) {
+                    Terminal.printError("Cannot use <<place>> instruction! Game already finished!");
+                } else {
+                    Terminal.printError("Invalid Inputs");
+                }
             }
 
             break;
@@ -133,5 +141,13 @@ public class Game {
 
     public static void place(int row, int col, int value) {
         Game.board[row][col] = value;
+    }
+
+    public static boolean canPlace() {
+        return canPlace;
+    }
+
+    public static void setCanPlace(boolean canPlace) {
+        Game.canPlace = canPlace;
     }
 }

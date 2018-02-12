@@ -29,14 +29,16 @@ public class Instructions {
     }
 
     public static void place(String input) throws InvalidInputException {
-        if (Errors.place(input)) {
+        if (Errors.place(input) || !Game.canPlace()) {
             throw new InvalidInputException();
         } else {
             String[] numbers = input.split(";");
-            int row1 = Integer.parseInt(numbers[0]);
-            int col1 = Integer.parseInt(numbers[1]);
-            int row2 = Integer.parseInt(numbers[2]);
-            int col2 = Integer.parseInt(numbers[3]);
+
+            int row1 = Instructions.mod(Integer.parseInt(numbers[0]));
+            int col1 = Instructions.mod(Integer.parseInt(numbers[1]));
+            int row2 = Instructions.mod(Integer.parseInt(numbers[2]));
+            int col2 = Instructions.mod(Integer.parseInt(numbers[3]));
+
             Game.place(row1, col1, Game.getTurn() % Game.getPlayers() + 1);
             Game.place(row2, col2, Game.getTurn() % Game.getPlayers() + 1);
         }
@@ -45,6 +47,16 @@ public class Instructions {
     public static void reset() {
         // TODO Auto-generated method stub
 
+    }
+
+    public static int mod(int number) {
+
+        while (number < 0) {
+            number = number + Game.getSize();
+        }
+        number = number % Game.getSize();
+
+        return number;
     }
 
 }
