@@ -7,8 +7,10 @@ import game.logic.Instructions;
 public class GameInterface {
 
     /**
+     * 
      * @param args
-     *            not used throughout the program
+     *            Used to determine the type of the game, the size of the board
+     *            and the number of players
      */
     public static void main(String[] args) {
 

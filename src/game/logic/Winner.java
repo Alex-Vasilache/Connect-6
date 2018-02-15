@@ -1,9 +1,16 @@
 package game.logic;
 
 import edu.kit.informatik.Terminal;
+import game.objects.Game;
 
 public class Winner {
 
+    /**
+     * Checks for a winner depending on the type of the game
+     * 
+     * @return true if the game is finished (if someone won or if the game ended
+     *         in a draw) and false instead
+     */
     public static boolean check() {
         if (Game.isStandard()) {
             return Winner.standardCheck();
@@ -12,6 +19,12 @@ public class Winner {
         }
     }
 
+    /**
+     * Checks for a winner in a standard game
+     * 
+     * @return true if the game is finished (if someone won or if the game ended
+     *         in a draw) and false instead
+     */
     private static boolean standardCheck() {
         // Searches for winner diagonally to the right
 
@@ -86,6 +99,8 @@ public class Winner {
             }
         }
 
+        // If the board is full and no winner has been found yet, that means
+        // that the game ended in a draw
         if ((Game.getTurn() + 1) * 2 == Game.getSize() * Game.getSize()) {
             Terminal.printLine("draw");
             Game.setCanPlace(false);
@@ -95,6 +110,12 @@ public class Winner {
         return false;
     }
 
+    /**
+     * Checks for a winner in a torus game
+     * 
+     * @return true if the game is finished (if someone won or if the game ended
+     *         in a draw) and false instead
+     */
     private static boolean torusCheck() {
 
         // Searches for winner diagonally to the right
@@ -198,6 +219,8 @@ public class Winner {
             }
         }
 
+        // If the board is full and no winner has been found yet, that means
+        // that the game ended in a draw
         if ((Game.getTurn() + 1) * 2 == Game.getSize() * Game.getSize()) {
             Terminal.printLine("draw");
             Game.setCanPlace(false);
