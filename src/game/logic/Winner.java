@@ -27,7 +27,6 @@ public class Winner {
      */
     private static boolean standardCheck() {
         // Searches for winner diagonally to the right
-
         for (int i = 0; i < Game.getSize() - 5; i++) {
             for (int j = 0; j < Game.getSize() - 5; j++) {
                 if (Game.getBoard()[i][j] != 0) {
@@ -44,7 +43,6 @@ public class Winner {
                 }
             }
         }
-
         // Searches for winner diagonally to the left
         for (int i = 0; i < Game.getSize() - 5; i++) {
             for (int j = 5; j < Game.getSize(); j++) {
@@ -62,7 +60,6 @@ public class Winner {
                 }
             }
         }
-
         // Searches for winner horizontally
         for (int i = 0; i < Game.getSize(); i++) {
             for (int j = 0; j < Game.getSize() - 5; j++) {
@@ -80,7 +77,6 @@ public class Winner {
                 }
             }
         }
-
         // Searches for winner vertically
         for (int i = 0; i < Game.getSize() - 5; i++) {
             for (int j = 0; j < Game.getSize(); j++) {
@@ -98,6 +94,40 @@ public class Winner {
                 }
             }
         }
+        // If the board is full and no winner has been found yet, that means
+        // that the game ended in a draw
+        if ((Game.getTurn() + 1) * 2 == Game.getSize() * Game.getSize()) {
+            Terminal.printLine("draw");
+            Game.setCanPlace(false);
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Checks for a winner in a torus game
+     * 
+     * @return true if the game is finished (if someone won or if the game ended
+     *         in a draw) and false instead
+     */
+    private static boolean torusCheck() {
+
+        // Searches for winner diagonally to the right
+        if (Winner.torusDiagRightCheck()) {
+            return true;
+        }
+        // Searches for winner diagonally to the left
+        if (Winner.torusDiagLeftCheck()) {
+            return true;
+        }
+        // Searches for winner horizontally
+        if (Winner.torusHorizontalCheck()) {
+            return true;
+        }
+        // Searches for winner vertically
+        if (Winner.torusVerticalCheck()) {
+            return true;
+        }
 
         // If the board is full and no winner has been found yet, that means
         // that the game ended in a draw
@@ -111,14 +141,11 @@ public class Winner {
     }
 
     /**
-     * Checks for a winner in a torus game
+     * Searches for winner diagonally to the right
      * 
-     * @return true if the game is finished (if someone won or if the game ended
-     *         in a draw) and false instead
+     * @return true if a winner has been found and false instead
      */
-    private static boolean torusCheck() {
-
-        // Searches for winner diagonally to the right
+    private static boolean torusDiagRightCheck() {
 
         for (int i = 0; i < Game.getSize(); i++) {
             for (int j = 0; j < Game.getSize(); j++) {
@@ -145,8 +172,16 @@ public class Winner {
                 }
             }
         }
+        return false;
+    }
 
-        // Searches for winner diagonally to the left
+    /**
+     * Searches for winner diagonally to the left
+     * 
+     * @return true if a winner has been found and false instead
+     */
+    private static boolean torusDiagLeftCheck() {
+
         for (int i = 0; i < Game.getSize(); i++) {
             for (int j = 5; j < Game.getSize() + 5; j++) {
 
@@ -174,8 +209,16 @@ public class Winner {
                 }
             }
         }
+        return false;
+    }
 
-        // Searches for winner horizontally
+    /**
+     * Searches for winner horizontally
+     * 
+     * @return true if a winner has been found and false instead
+     */
+    private static boolean torusHorizontalCheck() {
+
         for (int i = 0; i < Game.getSize(); i++) {
             for (int j = 0; j < Game.getSize(); j++) {
                 if (Game.getBoard()[i][j] != 0) {
@@ -196,8 +239,16 @@ public class Winner {
                 }
             }
         }
+        return false;
+    }
 
-        // Searches for winner vertically
+    /**
+     * Searches for winner vertically
+     * 
+     * @return true if a winner has been found and false instead
+     */
+    private static boolean torusVerticalCheck() {
+
         for (int i = 0; i < Game.getSize(); i++) {
             for (int j = 0; j < Game.getSize(); j++) {
                 if (Game.getBoard()[i][j] != 0) {
@@ -218,15 +269,6 @@ public class Winner {
                 }
             }
         }
-
-        // If the board is full and no winner has been found yet, that means
-        // that the game ended in a draw
-        if ((Game.getTurn() + 1) * 2 == Game.getSize() * Game.getSize()) {
-            Terminal.printLine("draw");
-            Game.setCanPlace(false);
-            return true;
-        }
-
         return false;
     }
 }
